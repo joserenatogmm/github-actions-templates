@@ -1,0 +1,44 @@
+name: Deploy to Portainer via Tailscale (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      portainer_ip:
+        description: "IP do servidor Portainer na rede Tailscale"
+        required: true
+        type: string
+      webhook_token:
+        description: "Token do webhook do Portainer"
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: deploy
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Tailscale
+        run: |
+          curl -fsSL https://tailscale.com/install.sh | sh
+          sudo tailscale up --authkey=${{ secrets.TAILSCALE_AUTH_KEY }} --ssh --ephemeral --advertise-routes=100.64.0.0/10
+
+      - name: Call Portainer Webhook via Tailscale
+        env:
+          PORTAINER_WEBHOOK_URL: "https://${{ inputs.portainer_ip }}:9443/api/stacks/webhooks/${{ inputs.webhook_token }}"
+        run: |
+          echo "Forçando resolução de DNS para o IP do Portainer na rede Tailscale..."
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST $PORTAINER_WEBHOOK_URL --insecure)
+
+          if [ "$response" -ne 204 ]; then
+            echo "Deployment failed with status code $response"
+            exit 1
+          else
+            echo "Deployment triggered successfully with status code $response"
+          fi
+
+      - name: Disconnect from Tailscale
+        run: sudo tailscale logout
