@@ -15,8 +15,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: portainer
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
