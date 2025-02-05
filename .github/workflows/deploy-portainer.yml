@@ -29,7 +29,7 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          TAILSCALE_AUTHKEY: op://6jujnoj7fa7dqx5ngjzy2itjfi/qvrc5hntqdqptlp7pc33h5fcsu/password
+          TAILSCALE_AUTHKEY: op://6jujnoj7fa7dqx5ngjzy2itjfi/qvrc5hntqdqptlp7pc33h5fcsu/senha
 
       - name: Print masked secret
         run: 'echo "Secret: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"'
