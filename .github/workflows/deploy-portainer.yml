@@ -11,6 +11,14 @@ on:
         description: "Token do webhook do Portainer"
         required: true
         type: string
+      portainer_vault_id:
+        description: "Vault ID do Portainer"
+        required: true
+        type: string
+      portainer_item_id:
+        description: "Item ID do Portainer"
+        required: true
+        type: string
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN:
         description: "1Password Service Account Token"
@@ -30,6 +38,7 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           TAILSCALE_AUTHKEY: op://6jujnoj7fa7dqx5ngjzy2itjfi/qvrc5hntqdqptlp7pc33h5fcsu/senha
+          PORTAINER_HOST: op://${{ inputs.portainer_vault_id }}/${{ inputs.portainer_item_id }}/senha
 
       - name: Install Tailscale
         run: |
@@ -37,7 +46,7 @@ jobs:
 
       - name: Call Portainer Webhook via Tailscale
         env:
-          PORTAINER_WEBHOOK_URL: "https://${{ inputs.portainer_ip }}:9443/api/stacks/webhooks/${{ inputs.webhook_token }}"
+          PORTAINER_WEBHOOK_URL: "${{ env.PORTAINER_HOST }}/api/stacks/webhooks/${{ inputs.webhook_token }}"
         run: |
           echo "Forçando resolução de DNS para o IP do Portainer na rede Tailscale..."
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST $PORTAINER_WEBHOOK_URL --insecure)
