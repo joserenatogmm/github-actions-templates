@@ -46,7 +46,7 @@ jobs:
 
       - name: Call Portainer Webhook via Tailscale
         env:
-          PORTAINER_WEBHOOK_URL: "${{ env.PORTAINER_HOST }}/api/stacks/webhooks/${{ inputs.webhook_token }}"
+          PORTAINER_WEBHOOK_URL: "https://${{ env.PORTAINER_HOST }}/api/stacks/webhooks/${{ inputs.webhook_token }}"
         run: |
           echo "Forçando resolução de DNS para o IP do Portainer na rede Tailscale..."
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST $PORTAINER_WEBHOOK_URL --insecure)
