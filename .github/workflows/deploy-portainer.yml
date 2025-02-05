@@ -42,7 +42,7 @@ jobs:
 
       - name: Install Tailscale
         run: |
-          curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --ssh --auth-key=${{ env.TAILSCALE_AUTHKEY }}
+          curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --ssh --auth-key=${{ env.TAILSCALE_AUTHKEY }} --advertise-routes=100.64.0.0/10
 
       - name: Call Portainer Webhook via Tailscale
         env:
