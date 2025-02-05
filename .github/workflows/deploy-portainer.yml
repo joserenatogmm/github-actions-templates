@@ -24,7 +24,7 @@ jobs:
         with:
           export-env: true
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.SERVICE_ACCOUNT_1PASSWORD }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           SECRET: "op://6jujnoj7fa7dqx5ngjzy2itjfi/qvrc5hntqdqptlp7pc33h5fcsu/password"
 
       - name: Print masked secret
