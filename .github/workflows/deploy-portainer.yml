@@ -3,10 +3,6 @@ name: Deploy to Portainer via Tailscale (Reusable)
 on:
   workflow_call:
     inputs:
-      service_account_1password:
-        description: "IP do servidor Portainer na rede Tailscale"
-        required: true
-        type: string
       portainer_ip:
         description: "IP do servidor Portainer na rede Tailscale"
         required: true
@@ -28,10 +24,10 @@ jobs:
         with:
           export-env: true
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ env.OP_SERVICE_ACCOUNT_TOKEN }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
 
       - name: Print masked secret
-        run: 'echo "Secret: ${{ env.OP_SERVICE_ACCOUNT_TOKEN }}"'
+        run: 'echo "Secret: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"'
 
       - name: Print masked secret
         run: 'echo "Secret: $SECRET"'
