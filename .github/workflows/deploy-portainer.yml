@@ -11,6 +11,10 @@ on:
         description: "Token do webhook do Portainer"
         required: true
         type: string
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN:
+        description: "1Password Service Account Token"
+        required: true
 
 jobs:
   deploy:
