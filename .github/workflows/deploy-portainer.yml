@@ -45,11 +45,8 @@ jobs:
           curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --ssh --auth-key=${{ env.TAILSCALE_AUTHKEY }} --advertise-routes=100.64.0.0/10 --accept-routes
 
       - name: Call Portainer Webhook via Tailscale
-        env:
-          PORTAINER_WEBHOOK_URL: "${{ env.PORTAINER_HOST }}/api/stacks/webhooks/${{ inputs.webhook_token }}"
         run: |
-          echo "Forçando resolução de DNS para o IP do Portainer na rede Tailscale..."
-          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST $PORTAINER_WEBHOOK_URL --insecure)
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://${{ env.PORTAINER_HOST }}/api/stacks/webhooks/${{ inputs.webhook_token }} --insecure)
 
           if [ "$response" -ne 204 ]; then
             echo "Deployment failed with status code $response"
