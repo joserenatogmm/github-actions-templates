@@ -28,10 +28,10 @@ jobs:
         with:
           export-env: true
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ inputs.service_account_1password }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ env.OP_SERVICE_ACCOUNT_TOKEN }}
 
       - name: Print masked secret
-        run: 'echo "Secret: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"'
+        run: 'echo "Secret: ${{ env.OP_SERVICE_ACCOUNT_TOKEN }}"'
 
       - name: Print masked secret
         run: 'echo "Secret: $SECRET"'
