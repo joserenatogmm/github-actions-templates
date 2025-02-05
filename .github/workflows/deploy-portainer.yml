@@ -3,10 +3,6 @@ name: Deploy to Portainer via Tailscale (Reusable)
 on:
   workflow_call:
     inputs:
-      portainer_ip:
-        description: "IP do servidor Portainer na rede Tailscale"
-        required: true
-        type: string
       webhook_token:
         description: "Token do webhook do Portainer"
         required: true
